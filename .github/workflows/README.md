@@ -1,7 +1,7 @@
 # Automatic tests
 # devops-for-developers-project-74
 
-[![CI](https://github.com/ТВОЙ_ЛОГИН_GITHUB/devops-for-developers-project-74/actions/workflows/push.yml/badge.svg)](https://github.com/ТВОЙ_ЛОГИН_GITHUB/devops-for-developers-project-74/actions/workflows/push.yml)
+[![CI](https://github.com/RaakzBlanvod/devops-for-developers-project-74/actions/workflows/push.yml/badge.svg)](https://github.com/RaakzBlanvod/devops-for-developers-project-74/actions/workflows/push.yml)
 
 After completing all the steps in the project, automatic tests will become available to you. Tests are run on each commit - once all tasks in the Hexlet interface are completed, make a commit, and the tests will run automatically.
 
