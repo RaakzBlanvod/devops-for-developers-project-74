@@ -16,22 +16,24 @@ services:
       - DATABASE_HOST=db
       - NODE_ENV=production
     command: >
-      sh -c "node -e '
-        const net = require(\"net\");
-        function waitForDB() {
-          const socket = net.createConnection(5432, \"db\");
-          socket.on(\"connect\", () => {
-            console.log(\"Database ready!\");
-            socket.destroy();
-            require(\"child_process\").exec(\"make start\", {stdio: \"inherit\"});
-          });
-          socket.on(\"error\", () => {
-            console.log(\"Waiting for database...\");
-            setTimeout(waitForDB, 1000);
-          });
-        }
-        waitForDB();
-      '"
+      sh -c "
+        node -e '
+          const net = require(\"net\");
+          function waitForDB() {
+            const socket = net.createConnection(5432, \"db\");
+            socket.on(\"connect\", () => {
+              console.log(\"Database ready!\");
+              socket.destroy();
+              process.exit(0);
+            });
+            socket.on(\"error\", () => {
+              console.log(\"Waiting for database...\");
+              setTimeout(waitForDB, 1000);
+            });
+          }
+          waitForDB();
+        ' && make start
+      "
 
   db:
     image: postgres:13
