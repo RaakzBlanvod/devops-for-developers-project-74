@@ -16,24 +16,19 @@ services:
       - DATABASE_HOST=db
       - NODE_ENV=production
     command: >
-      sh -c "echo 'Waiting for database...' && 
-             while ! nc -z db 5432; do sleep 1; done && 
-             echo 'Database ready!' && 
-             make start"
-
-  db:
-    image: postgres:13
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=blog_development
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-
-volumes:
-  postgres_data:
+      sh -c "node -e '
+        const net = require(\"net\");
+        function waitForDB() {
+          const socket = net.createConnection(5432, \"db\");
+          socket.on(\"connect\", () => {
+            console.log(\"Database ready!\");
+            socket.destroy();
+            require(\"child_process\").exec(\"make start\", {stdio: \"inherit\"});
+          });
+          socket.on(\"error\", () => {
+            console.log(\"Waiting for database...\");
+            setTimeout(waitForDB, 1000);
+          });
+        }
+        waitForDB();
+      '"
