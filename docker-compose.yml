@@ -24,7 +24,7 @@ services:
             socket.on(\"connect\", () => {
               console.log(\"Database ready!\");
               socket.destroy();
-              process.exit(0);
+              require(\"child_process\").exec(\"make test\", {stdio: \"inherit\"});
             });
             socket.on(\"error\", () => {
               console.log(\"Waiting for database...\");
@@ -32,7 +32,7 @@ services:
             });
           }
           waitForDB();
-        ' && make test
+        '
       "
 
   db:
