@@ -17,7 +17,7 @@ module.exports = {
     dialect: 'postgres',
     database: 'blog_development',
     username: 'postgres',
-    password: 'password',  // ← жёстко password
+    password: 'postgres',  // ← меняем на postgres
     port: 5432,
     host: 'db',
   },
