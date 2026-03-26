@@ -1,1 +1,33 @@
-services: {}
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./app:/app
+    command: make dev
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_NAME=blog_development
+      - DATABASE_USERNAME=postgres
+      - DATABASE_PASSWORD=postgres
+      - DATABASE_PORT=5432
+      - NODE_ENV=test
+
+  caddy:
+    image: caddy:2.8.4
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./services/caddy/Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - app
+
+volumes:
+  caddy_data:
+  caddy_config:
