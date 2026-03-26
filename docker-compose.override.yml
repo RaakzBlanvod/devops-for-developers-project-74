@@ -8,13 +8,8 @@ services:
     volumes:
       - ./app:/app
     command: make dev
-    environment:
-      - DATABASE_HOST=db
-      - DATABASE_NAME=blog_development
-      - DATABASE_USERNAME=postgres
-      - DATABASE_PASSWORD=postgres
-      - DATABASE_PORT=5432
-      - NODE_ENV=test
+    # Пустые переменные, чтобы они не переопределяли те, что в docker-compose.yml
+    environment: {}
 
   caddy:
     image: caddy:2.8.4
