@@ -15,10 +15,10 @@ module.exports = {
   },
   test: {
     dialect: 'postgres',
-    database: process.env.DATABASE_NAME,
-    username: process.env.DATABASE_USERNAME,
-    password: 'password',  // ← жёстко прописываем password для тестов
-    port: process.env.DATABASE_PORT,
-    host: process.env.DATABASE_HOST,
+    database: 'blog_development',
+    username: 'postgres',
+    password: 'password',  // ← жёстко password
+    port: 5432,
+    host: 'db',
   },
 };
