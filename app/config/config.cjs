@@ -14,11 +14,11 @@ module.exports = {
     host: process.env.DATABASE_HOST,
   },
   test: {
-    dialect: 'postgres',
-    database: 'blog_development',
-    username: 'postgres',
-    password: 'postgres',  // ← меняем на postgres
-    port: 5432,
-    host: 'db',
+  dialect: 'postgres',
+  database: process.env.DATABASE_NAME || 'blog_development',
+  username: process.env.DATABASE_USERNAME || 'postgres',
+  password: process.env.DATABASE_PASSWORD || 'postgres',
+  port: process.env.DATABASE_PORT || 5432,
+  host: process.env.DATABASE_HOST || 'db',
   },
 };

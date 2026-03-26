@@ -3,8 +3,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.production
-    ports:
-      - "8080:8080"
     image: raakz/devops-for-developers-project-74
     depends_on:
       - db
@@ -14,26 +12,7 @@ services:
       - DATABASE_PASSWORD=postgres
       - DATABASE_PORT=5432
       - DATABASE_HOST=db
-      - NODE_ENV=production
-    command: >
-      sh -c "
-        node -e '
-          const net = require(\"net\");
-          function waitForDB() {
-            const socket = net.createConnection(5432, \"db\");
-            socket.on(\"connect\", () => {
-              console.log(\"Database ready!\");
-              socket.destroy();
-              process.exit(0);
-            });
-            socket.on(\"error\", () => {
-              console.log(\"Waiting for database...\");
-              setTimeout(waitForDB, 1000);
-            });
-          }
-          waitForDB();
-        ' && make start
-      "
+      - NODE_ENV=test
 
   db:
     image: postgres:16
